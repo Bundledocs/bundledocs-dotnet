@@ -1,0 +1,44 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+tab_width = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{csproj,props,targets,xml}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[*.cs]
+# Formatting — non-negotiable for consistency
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+
+# Naming — PascalCase for public members
+dotnet_naming_symbols.method_and_property_symbols.applicable_kinds = method,property,enum
+dotnet_naming_symbols.method_and_property_symbols.applicable_accessibilities = *
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_rule.methods_and_properties_must_be_pascal_case.severity = suggestion
+dotnet_naming_rule.methods_and_properties_must_be_pascal_case.symbols = method_and_property_symbols
+dotnet_naming_rule.methods_and_properties_must_be_pascal_case.style = pascal_case_style
+
+# Naming — _camelCase for private fields
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.prefix_underscore.capitalization = camel_case
+dotnet_naming_style.prefix_underscore.required_prefix = _
+dotnet_naming_rule.private_members_with_underscore.symbols = private_fields
+dotnet_naming_rule.private_members_with_underscore.style = prefix_underscore
+dotnet_naming_rule.private_members_with_underscore.severity = suggestion
