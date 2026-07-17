@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Bundledocs.Api.Wrapper.Test/Bundledocs.Api.Wrapper.Test.csproj">
+    <BuildType Project="CommonDebug" />
+  </Project>
+  <Project Path="Bundledocs.Api.Wrapper/Bundledocs.Api.Wrapper.csproj" />
+</Solution>

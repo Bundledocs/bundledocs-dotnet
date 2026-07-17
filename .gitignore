@@ -1,0 +1,22 @@
+# Build
+[Bb]in/
+[Oo]bj/
+*.nupkg
+
+# User / IDE
+*.user
+*.userprefs
+.vs/
+.idea/
+
+# OS
+.DS_Store
+
+# Secrets
+.env
+
+# Session context (private notes)
+_session-context.md
+
+# Internal scripts
+scripts/

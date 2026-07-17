@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Configurations>Debug;Release;CommonDebug;CommonRelease</Configurations>
+        <LangVersion>latest</LangVersion>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='CommonDebug'">
+        <Optimize>false</Optimize>
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='CommonRelease'">
+        <Optimize>true</Optimize>
+        <DefineConstants>TRACE</DefineConstants>
+        <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <!--@start - xunit-->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.2.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    <!--@end - xunit-->
+
+    <ItemGroup>
+        <ProjectReference Include="..\Bundledocs.Api.Wrapper\Bundledocs.Api.Wrapper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="RestSharp" Version="114.0.0" />
+    </ItemGroup>
+</Project>

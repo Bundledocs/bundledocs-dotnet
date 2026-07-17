@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Configurations>Debug;Release;CommonDebug;CommonRelease</Configurations>
+        <LangVersion>latest</LangVersion>
+        <Nullable>annotations</Nullable>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <NoWarn>CS1591</NoWarn>
+
+        <!-- NuGet Package Metadata -->
+        <PackageId>Bundledocs.net</PackageId>
+        <Version>0.7.0</Version>
+        <Authors>Bundledocs</Authors>
+        <Company>Bundledocs</Company>
+        <Description>The official Bundledocs .NET library, providing a typed client for the Bundledocs REST API. Supports .NET Standard 2.0+.</Description>
+        <PackageTags>bundledocs;api;legal;documents;bundles;pdf</PackageTags>
+        <PackageProjectUrl>https://github.com/Bundledocs/bundledocs-dotnet</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Bundledocs/bundledocs-dotnet.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>logo.png</PackageIcon>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <DebugType>embedded</DebugType>
+        <Copyright>Copyright (c) Bundledocs</Copyright>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='CommonDebug'">
+        <Optimize>false</Optimize>
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='CommonRelease'">
+        <Optimize>true</Optimize>
+        <DefineConstants>TRACE</DefineConstants>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="RestSharp" Version="114.0.0" />
+        <PackageReference Include="System.Text.Json" Version="10.0.5" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\README.md" Pack="true" PackagePath="" />
+        <None Include="..\assets\logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+</Project>
