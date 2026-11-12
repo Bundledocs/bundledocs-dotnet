@@ -1,16 +1,13 @@
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Bundledocs.Api.Wrapper.Test")]
-
 namespace Bundledocs.Api.Wrapper
 {
+    using Bundledocs.Api.Wrapper.Constants;
     using Bundledocs.Api.Wrapper.Interfaces;
     using Bundledocs.Api.Wrapper.Providers;
     using System;
 
     /// <summary>
     /// Single entry point for consuming the Bundledocs API.
-    /// Provides access to Users, Groups, and Briefs and other endpoints through a unified, authenticated client.
+    /// Provides access to Users, Groups, Bundles and other endpoints through a unified, authenticated client.
     /// Implements <see cref="IDisposable"/> to release the underlying HTTP resources when no longer needed.
     /// </summary>
     public sealed class BundledocsApiClient : IBundledocsApi, IDisposable
@@ -18,7 +15,17 @@ namespace Bundledocs.Api.Wrapper
         private readonly BundledocsApiRequestProvider _requestProvider;
 
         /// <summary>
-        /// Creates a new API client authenticated with the supplied access token.
+        /// Creates a new API client for the Bundledocs production API, authenticated with the supplied access token.
+        /// </summary>
+        /// <param name="accessToken">A valid OAuth 2.0 Bearer access token.</param>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="accessToken"/> is null or empty.</exception>
+        public BundledocsApiClient(string accessToken)
+            : this(URLConstant.URLFormat.SERVER, accessToken)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new API client for the given API address, authenticated with the supplied access token.
         /// </summary>
         /// <param name="apiBasePath">The base URL of the Bundledocs API (e.g. "https://app.bundledocs.com/api/v1").</param>
         /// <param name="accessToken">A valid OAuth 2.0 Bearer access token.</param>
@@ -38,14 +45,23 @@ namespace Bundledocs.Api.Wrapper
             _requestProvider = new BundledocsApiRequestProvider(apiBasePath, accessToken);
             Users = new BundledocsApiUsers(_requestProvider);
             Groups = new BundledocsApiGroups(_requestProvider);
-            Briefs = new BundledocsApiBriefs(_requestProvider);
+            Bundles = new BundledocsApiBundles(_requestProvider);
         }
 
+        /// <summary>
+        /// Operations for the authenticated user.
+        /// </summary>
         public IBundledocsApiUsers Users { get; }
 
+        /// <summary>
+        /// Operations for groups and their members.
+        /// </summary>
         public IBundledocsApiGroups Groups { get; }
 
-        public IBundledocsApiBriefs Briefs { get; }
+        /// <summary>
+        /// Operations for bundles.
+        /// </summary>
+        public IBundledocsApiBundles Bundles { get; }
 
         public void Dispose()
         {

@@ -9,6 +9,6 @@ namespace Bundledocs.Api.Wrapper.Interfaces
 
         IBundledocsApiGroups Groups { get; }
 
-        IBundledocsApiBriefs Briefs { get; }
+        IBundledocsApiBundles Bundles { get; }
     }
 }

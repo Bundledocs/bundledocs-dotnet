@@ -36,23 +36,26 @@ From within Visual Studio: open **Manage NuGet Packages**, search for `Bundledoc
 
 ```csharp
 using Bundledocs.Api.Wrapper;
+using Bundledocs.Api.Wrapper.Models;
 
-// Create the client with your API base URL and OAuth2 Bearer token
-using BundledocsApiClient client = new BundledocsApiClient(
-    apiBasePath: "https://app.bundledocs.com/api/v1",
-    accessToken: "your-access-token"
-);
+// Create the client with your OAuth 2.0 access token (uses the Bundledocs production API)
+using BundledocsApiClient client = new BundledocsApiClient("your-access-token");
 
 // Users
-var user = await client.Users.Me();
-var lazyUser = await client.Users.MeLazy();
+User user = await client.Users.GetMeAsync();
+
+// Expand extra data (supported values: MeExpand)
+User userWithBundles = await client.Users.GetMeAsync(new MeRequestOptions { Expand = { MeExpand.Bundles } });
 
 // Groups
-var groups = await client.Groups.GetGroups();
-var members = await client.Groups.GetGroupMembers(partitionKey, rowKey);
+Group[] groups = await client.Groups.GetGroupsAsync();
+GroupMember[] members = await client.Groups.GetGroupMembersAsync(partitionKey, rowKey);
 
-// Briefs (Bundles)
-var migrations = await client.Briefs.GetBundleMigrations(partitionKey, rowKey);
+// Bundles
+BundleMigrationInvitation[] invitations = await client.Bundles.GetMigrationInvitationsAsync(partitionKey, rowKey);
+
+// To use another API address (for example, a test environment), pass it first:
+// new BundledocsApiClient("https://app.bundledocs.com/api/v1", "your-access-token")
 ```
 
 ## Documentation
@@ -61,7 +64,7 @@ For the full Bundledocs REST API reference, visit [API Documentation - Bundledoc
 
 ## Development
 
-Requirements: [.NET 8 SDK](https://dotnet.microsoft.com/download) or later.
+Requirements: [.NET 10 SDK](https://dotnet.microsoft.com/download) or later.
 
 ```bash
 git clone https://github.com/Bundledocs/bundledocs-dotnet.git

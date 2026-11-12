@@ -4,6 +4,7 @@ namespace Bundledocs.Api.Wrapper.Providers
     using Bundledocs.Api.Wrapper.Interfaces;
     using Bundledocs.Api.Wrapper.Models;
     using RestSharp;
+    using RestSharp.Authenticators.OAuth2;
     using System;
     using System.Collections.Generic;
     using System.Text.Json;
@@ -27,20 +28,19 @@ namespace Bundledocs.Api.Wrapper.Providers
 
         internal BundledocsApiRequestProvider(string apiBasePath, string accessToken)
         {
+            // the HttpClient is shared by every client with the same base URL, so per-client settings such as the token belong in these options
             RestClientOptions options = new RestClientOptions
             {
-                BaseUrl = new Uri(apiBasePath)
+                BaseUrl = new Uri(apiBasePath),
+                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(accessToken, "Bearer")
             };
 
-            _client = new RestClient(options, configureDefaultHeaders: headers =>
-            {
-                headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-            }, useClientFactory: true);
+            _client = new RestClient(options, useClientFactory: true);
         }
 
-        public async Task<T> Get<T>(string endpoint, CancellationToken cancellationToken)
+        public async Task<T> GetAsync<T>(string endpoint, CancellationToken cancellationToken)
         {
-            RestRequest request = new RestRequest(endpoint);
+            RestRequest request = new RestRequest(endpoint, Method.Get);
             RestResponse response = await _client.ExecuteGetAsync(request, cancellationToken).ConfigureAwait(false);
 
             EnsureSuccess(endpoint, response);
@@ -66,9 +66,9 @@ namespace Bundledocs.Api.Wrapper.Providers
             return apiResponse.Data[0];
         }
 
-        public async Task<T[]> GetList<T>(string endpoint, CancellationToken cancellationToken)
+        public async Task<T[]> GetListAsync<T>(string endpoint, CancellationToken cancellationToken)
         {
-            RestRequest request = new RestRequest(endpoint);
+            RestRequest request = new RestRequest(endpoint, Method.Get);
             RestResponse response = await _client.ExecuteGetAsync(request, cancellationToken).ConfigureAwait(false);
 
             EnsureSuccess(endpoint, response);
@@ -88,7 +88,7 @@ namespace Bundledocs.Api.Wrapper.Providers
             return apiResponse.Data[0].ToArray();
         }
 
-        public async Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest body, CancellationToken cancellationToken)
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest body, CancellationToken cancellationToken)
         {
             RestRequest request = new RestRequest(endpoint, Method.Post);
 

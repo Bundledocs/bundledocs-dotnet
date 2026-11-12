@@ -2,17 +2,17 @@ namespace Bundledocs.Api.Wrapper.Models
 {
     using System.Collections.Generic;
 
-    public class BundledocsApiResponseGroupMember : BundledocsApiResponseBase
+    public class GroupMember : BundledocsEntity
     {
         public string Role { get; set; }     
         public string Email { get; set; } 
 
         /// <summary>
-        /// Gets or sets the shared briefs.
+        /// Gets or sets the shared bundles.
         /// </summary>
         /// <value>
-        /// The shared briefs.
+        /// The shared bundles.
         /// </value>
-        public List<BundledocsApiResponseBrief> BriefsShared { get; set; }        
+        public List<Bundle> BriefsShared { get; set; }        
     }
 }

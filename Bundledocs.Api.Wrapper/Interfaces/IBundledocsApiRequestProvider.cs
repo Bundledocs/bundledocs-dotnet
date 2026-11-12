@@ -5,12 +5,12 @@ namespace Bundledocs.Api.Wrapper.Interfaces
 
     /// <summary>
     /// Internal abstraction over HTTP operations.
-    /// Decouples the API providers (Users, Groups, Briefs and etc) from the concrete HTTP implementation.
+    /// Decouples the API providers (Users, Groups, Bundles and etc) from the concrete HTTP implementation.
     /// </summary>
     internal interface IBundledocsApiRequestProvider
     {
-        Task<T> Get<T>(string endpoint, CancellationToken cancellationToken = default);
-        Task<T[]> GetList<T>(string endpoint, CancellationToken cancellationToken = default);
-        Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest body = default, CancellationToken cancellationToken = default);
+        Task<T> GetAsync<T>(string endpoint, CancellationToken cancellationToken = default);
+        Task<T[]> GetListAsync<T>(string endpoint, CancellationToken cancellationToken = default);
+        Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest body = default, CancellationToken cancellationToken = default);
     }
 }

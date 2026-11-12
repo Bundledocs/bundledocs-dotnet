@@ -12,13 +12,15 @@ namespace Bundledocs.Api.Wrapper.Interfaces
         /// <summary>
         /// Retrieves all groups accessible to the authenticated user.
         /// </summary>
-        Task<BundledocsApiResponseGroup[]> GetGroups(CancellationToken cancellationToken = default);
+        /// <param name="cancellationToken">Cancels the request.</param>
+        Task<Group[]> GetGroupsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves the members of a specific group.
         /// </summary>
         /// <param name="partitionKey">The partition key of the group.</param>
         /// <param name="rowKey">The row key of the group.</param>
-        Task<BundledocsApiResponseGroupMember[]> GetGroupMembers(string partitionKey, string rowKey, CancellationToken cancellationToken = default);
+        /// <param name="cancellationToken">Cancels the request.</param>
+        Task<GroupMember[]> GetGroupMembersAsync(string partitionKey, string rowKey, CancellationToken cancellationToken = default);
     }
 }

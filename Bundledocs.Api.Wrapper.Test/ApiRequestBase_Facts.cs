@@ -1,19 +1,35 @@
-﻿namespace Bundledocs.Api.Wrapper.Test
+namespace Bundledocs.Api.Wrapper.Test
 {
     using System;
-    using Bundledocs.Api.Wrapper.Providers;
 
-    public class ApiRequestBase_Facts
+    public class ApiRequestBase_Facts : IDisposable
     {
-        internal BundledocsApiRequestProvider _bundledocsApiGetRequestProvider;
+        protected BundledocsApiClient _client;
 
         public ApiRequestBase_Facts()
         {
-            string serverName = Environment.GetEnvironmentVariable("BUNDLEDOCS_API_URL")
-                                ?? "https://app.bundledocs.com/api/v1";
-            string accessToken = Environment.GetEnvironmentVariable("BUNDLEDOCS_ACCESS_TOKEN")
-                                 ?? throw new InvalidOperationException("BUNDLEDOCS_ACCESS_TOKEN environment variable is not set.");
-            _bundledocsApiGetRequestProvider = new BundledocsApiRequestProvider(serverName, accessToken);
+            string serverName = URLConstant.URLFormat.SERVER;
+            string accessToken = ResolveEnvironmentVariable("BUNDLEDOCS_ACCESS_TOKEN");
+            _client = new BundledocsApiClient(serverName, accessToken);
+        }
+
+        public void Dispose()
+        {
+            _client?.Dispose();
+        }
+
+        protected static string ResolveEnvironmentVariable(string variableName)
+        {
+            string value = Environment.GetEnvironmentVariable(variableName);
+
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                throw new InvalidOperationException(
+                    $"Environment variable '{variableName}' is not set.\n" +
+                    $"Set it via: set {variableName}=<value>");
+            }
+
+            return value;
         }
     }
 }

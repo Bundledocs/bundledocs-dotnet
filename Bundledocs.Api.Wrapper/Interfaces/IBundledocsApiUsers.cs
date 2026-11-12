@@ -10,13 +10,11 @@ namespace Bundledocs.Api.Wrapper.Interfaces
     public interface IBundledocsApiUsers
     {
         /// <summary>
-        /// Retrieves the full profile of the currently authenticated user.
+        /// Retrieves a lightweight profile of the currently authenticated user (without bundles).
+        /// Use <paramref name="options"/> to expand additional data (see <see cref="MeExpand"/>).
         /// </summary>
-        Task<BundledocsApiResponseUser> Me(CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Retrieves a lightweight profile of the currently authenticated user.
-        /// </summary>
-        Task<BundledocsApiResponseUser> MeLazy(CancellationToken cancellationToken = default);
+        /// <param name="options">Additional data to include in the response.</param>
+        /// <param name="cancellationToken">Cancels the request.</param>
+        Task<User> GetMeAsync(MeRequestOptions options = null, CancellationToken cancellationToken = default);
     }
 }

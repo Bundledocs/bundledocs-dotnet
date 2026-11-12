@@ -11,7 +11,7 @@
 
         <!-- NuGet Package Metadata -->
         <PackageId>Bundledocs.net</PackageId>
-        <Version>0.7.0</Version>
+        <Version>0.8.0</Version>
         <Authors>Bundledocs</Authors>
         <Company>Bundledocs</Company>
         <Description>The official Bundledocs .NET library, providing a typed client for the Bundledocs REST API. Supports .NET Standard 2.0+.</Description>
@@ -27,6 +27,10 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <DebugType>embedded</DebugType>
         <Copyright>Copyright (c) Bundledocs</Copyright>
+
+        <!-- Fails `dotnet pack` if the public API breaks compared to the last version published on NuGet. -->
+        <EnablePackageValidation>true</EnablePackageValidation>
+        <PackageValidationBaselineVersion>0.7.0</PackageValidationBaselineVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='CommonDebug'">
@@ -40,6 +44,10 @@
         <DefineConstants>TRACE</DefineConstants>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Bundledocs.Api.Wrapper.Test" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="RestSharp" Version="114.0.0" />
